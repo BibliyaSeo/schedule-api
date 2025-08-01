@@ -7,6 +7,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ScheduleUpdateRequestDto {
     private String title;
-    private String author;
+    private String writer;
     private String password;
 }

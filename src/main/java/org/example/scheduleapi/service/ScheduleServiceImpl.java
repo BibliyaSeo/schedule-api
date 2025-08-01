@@ -23,18 +23,18 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     public ScheduleResponseDto save(ScheduleRequestDto dto) {
-        Schedule savedSchedule = scheduleRepository.save(new Schedule(dto.getTitle(), dto.getContents(), dto.getAuthor(), dto.getPassword()));
+        Schedule savedSchedule = scheduleRepository.save(new Schedule(dto.getTitle(), dto.getContents(), dto.getWriter(), dto.getPassword()));
         return new ScheduleResponseDto(savedSchedule);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ScheduleResponseDto> findSchedulesByAuthor(String author) {
+    public List<ScheduleResponseDto> findSchedulesByWriter(String writer) {
         List<Schedule> schedules;
-        if (author == null || author.isEmpty()) {
+        if (writer == null || writer.isEmpty()) {
             schedules = scheduleRepository.findAll(Sort.by(Sort.Direction.DESC, "updatedAt"));
         } else {
-            schedules = scheduleRepository.findByAuthorOrderByUpdatedAtDesc(author);
+            schedules = scheduleRepository.findByWriterOrderByUpdatedAtDesc(writer);
         }
         return schedules.stream().map(ScheduleResponseDto::new).toList();
     }
@@ -55,7 +55,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public ScheduleResponseDto updateSchedule(Long id, ScheduleUpdateRequestDto dto) {
         Schedule schedule = validateWithPassword(id, dto.getPassword());
-        schedule.updateSchedule(dto.getTitle(), dto.getAuthor());
+        schedule.updateSchedule(dto.getTitle(), dto.getWriter());
         return new ScheduleResponseDto(schedule);
     }
 

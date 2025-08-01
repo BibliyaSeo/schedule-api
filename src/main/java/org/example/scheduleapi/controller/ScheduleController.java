@@ -26,8 +26,8 @@ public class ScheduleController {
 
     // 일정 조회
     @GetMapping
-    public ResponseEntity<List<ScheduleResponseDto>> getSchedules(@RequestParam(required = false) String author) {
-        return new ResponseEntity<>(scheduleService.findSchedulesByAuthor(author), HttpStatus.OK);
+    public ResponseEntity<List<ScheduleResponseDto>> getSchedules(@RequestParam(required = false) String writer) {
+        return new ResponseEntity<>(scheduleService.findSchedulesByWriter(writer), HttpStatus.OK);
     }
 
     // 일정 단건 조회
