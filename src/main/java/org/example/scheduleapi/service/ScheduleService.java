@@ -1,9 +1,6 @@
 package org.example.scheduleapi.service;
 
-import org.example.scheduleapi.dto.PasswordRequestDto;
-import org.example.scheduleapi.dto.ScheduleRequestDto;
-import org.example.scheduleapi.dto.ScheduleResponseDto;
-import org.example.scheduleapi.dto.ScheduleUpdateRequestDto;
+import org.example.scheduleapi.dto.*;
 import org.example.scheduleapi.entity.Schedule;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -14,7 +11,7 @@ public interface ScheduleService {
 
     List<ScheduleResponseDto> findSchedulesByWriter(String writer);
 
-    ScheduleResponseDto findScheduleById(Long id);
+    ScheduleDetailResponseDto findScheduleById(Long id);
 
     Schedule findScheduleOrThrow(Long id);
 

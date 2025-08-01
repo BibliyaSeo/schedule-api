@@ -1,10 +1,7 @@
 package org.example.scheduleapi.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.example.scheduleapi.dto.PasswordRequestDto;
-import org.example.scheduleapi.dto.ScheduleRequestDto;
-import org.example.scheduleapi.dto.ScheduleResponseDto;
-import org.example.scheduleapi.dto.ScheduleUpdateRequestDto;
+import org.example.scheduleapi.dto.*;
 import org.example.scheduleapi.service.ScheduleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,7 +29,7 @@ public class ScheduleController {
 
     // 일정 단건 조회
     @GetMapping("/{id}")
-    public ResponseEntity<ScheduleResponseDto> getSchedule(@PathVariable Long id) {
+    public ResponseEntity<ScheduleDetailResponseDto> getSchedule(@PathVariable Long id) {
         return new ResponseEntity<>(scheduleService.findScheduleById(id), HttpStatus.OK);
     }
 
