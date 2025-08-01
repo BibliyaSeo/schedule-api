@@ -12,7 +12,7 @@ import java.util.List;
 public interface ScheduleService {
     ScheduleResponseDto save(@RequestBody ScheduleRequestDto dto);
 
-    List<ScheduleResponseDto> findSchedulesByAuthor(String author);
+    List<ScheduleResponseDto> findSchedulesByWriter(String writer);
 
     ScheduleResponseDto findScheduleById(Long id);
 
