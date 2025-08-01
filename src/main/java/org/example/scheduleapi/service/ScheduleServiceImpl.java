@@ -1,6 +1,7 @@
 package org.example.scheduleapi.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.scheduleapi.dto.PasswordRequestDto;
 import org.example.scheduleapi.dto.ScheduleRequestDto;
 import org.example.scheduleapi.dto.ScheduleResponseDto;
 import org.example.scheduleapi.dto.ScheduleUpdateRequestDto;
@@ -16,11 +17,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ScheduleServiceImpl implements ScheduleService {
     private final ScheduleRepository scheduleRepository;
 
     @Override
-    @Transactional
     public ScheduleResponseDto save(ScheduleRequestDto dto) {
         Schedule savedSchedule = scheduleRepository.save(new Schedule(dto.getTitle(), dto.getContents(), dto.getAuthor(), dto.getPassword()));
         return new ScheduleResponseDto(savedSchedule);
@@ -52,14 +53,25 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 
     @Override
-    @Transactional
     public ScheduleResponseDto updateSchedule(Long id, ScheduleUpdateRequestDto dto) {
+        Schedule schedule = validateWithPassword(id, dto.getPassword());
+        schedule.updateSchedule(dto.getTitle(), dto.getAuthor());
+        return new ScheduleResponseDto(schedule);
+    }
+
+    @Override
+    public void deleteSchedule(Long id, PasswordRequestDto dto) {
+        Schedule schedule = validateWithPassword(id, dto.getPassword());
+        scheduleRepository.delete(schedule);
+    }
+
+    @Override
+    public Schedule validateWithPassword(Long id, String password) {
         Schedule schedule = findScheduleOrThrow(id);
-        if (!schedule.getPassword().equals(dto.getPassword())) {
+        if (!schedule.getPassword().equals(password)) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다.");
         }
 
-        schedule.updateSchedule(dto.getTitle(), dto.getAuthor());
-        return new ScheduleResponseDto(schedule);
+        return schedule;
     }
 }
