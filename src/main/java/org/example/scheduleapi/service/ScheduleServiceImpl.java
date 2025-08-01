@@ -5,6 +5,7 @@ import org.example.scheduleapi.dto.ScheduleRequestDto;
 import org.example.scheduleapi.dto.ScheduleResponseDto;
 import org.example.scheduleapi.entity.Schedule;
 import org.example.scheduleapi.repository.ScheduleRepository;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,8 +25,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ScheduleResponseDto> findAllSchedules() {
-        List<Schedule> schedules = scheduleRepository.findAll();
+    public List<ScheduleResponseDto> findSchedulesByAuthor(String author) {
+        List<Schedule> schedules;
+        if (author == null || author.isEmpty()) {
+            schedules = scheduleRepository.findAll(Sort.by(Sort.Direction.DESC, "updatedAt"));
+        } else {
+            schedules = scheduleRepository.findByAuthorOrderByUpdatedAtDesc(author);
+        }
         return schedules.stream().map(ScheduleResponseDto::new).toList();
     }
 }
