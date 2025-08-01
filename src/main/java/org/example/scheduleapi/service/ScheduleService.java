@@ -10,4 +10,6 @@ public interface ScheduleService {
     ScheduleResponseDto save(@RequestBody ScheduleRequestDto dto);
 
     List<ScheduleResponseDto> findSchedulesByAuthor(String author);
+
+    ScheduleResponseDto findScheduleById(Long id);
 }

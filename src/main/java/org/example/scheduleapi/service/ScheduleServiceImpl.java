@@ -6,8 +6,10 @@ import org.example.scheduleapi.dto.ScheduleResponseDto;
 import org.example.scheduleapi.entity.Schedule;
 import org.example.scheduleapi.repository.ScheduleRepository;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -33,5 +35,12 @@ public class ScheduleServiceImpl implements ScheduleService {
             schedules = scheduleRepository.findByAuthorOrderByUpdatedAtDesc(author);
         }
         return schedules.stream().map(ScheduleResponseDto::new).toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ScheduleResponseDto findScheduleById(Long id) {
+        Schedule schedule = scheduleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 id 입니다."));
+        return new ScheduleResponseDto(schedule);
     }
 }
