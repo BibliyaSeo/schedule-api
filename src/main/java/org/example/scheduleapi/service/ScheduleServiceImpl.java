@@ -6,6 +6,7 @@ import org.example.scheduleapi.dto.ScheduleResponseDto;
 import org.example.scheduleapi.entity.Schedule;
 import org.example.scheduleapi.repository.ScheduleRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -13,6 +14,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     private final ScheduleRepository scheduleRepository;
 
     @Override
+    @Transactional
     public ScheduleResponseDto save(ScheduleRequestDto dto) {
         Schedule savedSchedule = scheduleRepository.save(new Schedule(dto.getTitle(), dto.getContents(), dto.getAuthor(), dto.getPassword()));
         return new ScheduleResponseDto(savedSchedule);
