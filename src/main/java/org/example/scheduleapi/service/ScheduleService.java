@@ -1,5 +1,6 @@
 package org.example.scheduleapi.service;
 
+import org.example.scheduleapi.dto.PasswordRequestDto;
 import org.example.scheduleapi.dto.ScheduleRequestDto;
 import org.example.scheduleapi.dto.ScheduleResponseDto;
 import org.example.scheduleapi.dto.ScheduleUpdateRequestDto;
@@ -18,4 +19,8 @@ public interface ScheduleService {
     Schedule findScheduleOrThrow(Long id);
 
     ScheduleResponseDto updateSchedule(Long id, @RequestBody ScheduleUpdateRequestDto dto);
+
+    void deleteSchedule(Long id, @RequestBody PasswordRequestDto dto);
+
+    Schedule validateWithPassword(Long id, String password);
 }

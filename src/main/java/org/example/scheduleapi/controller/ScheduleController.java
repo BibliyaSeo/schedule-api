@@ -1,6 +1,7 @@
 package org.example.scheduleapi.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.example.scheduleapi.dto.PasswordRequestDto;
 import org.example.scheduleapi.dto.ScheduleRequestDto;
 import org.example.scheduleapi.dto.ScheduleResponseDto;
 import org.example.scheduleapi.dto.ScheduleUpdateRequestDto;
@@ -42,5 +43,10 @@ public class ScheduleController {
     }
 
     // 일정 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSchedule(@PathVariable Long id, @RequestBody PasswordRequestDto dto) {
+        scheduleService.deleteSchedule(id, dto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
 
