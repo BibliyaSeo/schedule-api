@@ -6,10 +6,9 @@ import org.example.scheduleapi.dto.ScheduleResponseDto;
 import org.example.scheduleapi.service.ScheduleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,6 +23,10 @@ public class ScheduleController {
     }
 
     // 일정 조회
+    @GetMapping
+    public ResponseEntity<List<ScheduleResponseDto>> getSchedules() {
+        return new ResponseEntity<>(scheduleService.findAllSchedules(), HttpStatus.OK);
+    }
 
     // 일정 수정
 
