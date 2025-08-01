@@ -15,7 +15,8 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 
 public class Schedule {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String contents;
@@ -35,9 +36,9 @@ public class Schedule {
         this.password = password;
     }
 
-    public void updateSchedule(String title, String author, String password) {
+    public void updateSchedule(String title, String author) {
         this.title = title;
         this.author = author;
-        this.password = password;
     }
+
 }

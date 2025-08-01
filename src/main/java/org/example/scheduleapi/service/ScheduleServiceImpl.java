@@ -3,6 +3,7 @@ package org.example.scheduleapi.service;
 import lombok.RequiredArgsConstructor;
 import org.example.scheduleapi.dto.ScheduleRequestDto;
 import org.example.scheduleapi.dto.ScheduleResponseDto;
+import org.example.scheduleapi.dto.ScheduleUpdateRequestDto;
 import org.example.scheduleapi.entity.Schedule;
 import org.example.scheduleapi.repository.ScheduleRepository;
 import org.springframework.data.domain.Sort;
@@ -40,7 +41,25 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     @Transactional(readOnly = true)
     public ScheduleResponseDto findScheduleById(Long id) {
-        Schedule schedule = scheduleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 id 입니다."));
+        Schedule schedule = findScheduleOrThrow(id);
+        return new ScheduleResponseDto(schedule);
+    }
+
+    @Override
+    public Schedule findScheduleOrThrow(Long id) {
+        return scheduleRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "존재하지 않는 일정입니다."));
+    }
+
+
+    @Override
+    @Transactional
+    public ScheduleResponseDto updateSchedule(Long id, ScheduleUpdateRequestDto dto) {
+        Schedule schedule = findScheduleOrThrow(id);
+        if (!schedule.getPassword().equals(dto.getPassword())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "비밀번호가 일치하지 않습니다.");
+        }
+
+        schedule.updateSchedule(dto.getTitle(), dto.getAuthor());
         return new ScheduleResponseDto(schedule);
     }
 }
