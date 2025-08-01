@@ -39,4 +39,9 @@ public class Comment {
         this.password = password;
         this.schedule = schedule;
     }
+
+    public void updateComment(String contents, String writer) {
+        this.contents = contents;
+        this.writer = writer;
+    }
 }
