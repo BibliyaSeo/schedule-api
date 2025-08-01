@@ -8,6 +8,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,6 +31,9 @@ public class Schedule {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
+    @OneToMany(mappedBy = "schedule")
+    private List<Comment> comments = new ArrayList<>();
+
     public Schedule(String title, String contents, String writer, String password) {
         this.title = title;
         this.contents = contents;
@@ -40,5 +45,4 @@ public class Schedule {
         this.title = title;
         this.writer = writer;
     }
-
 }

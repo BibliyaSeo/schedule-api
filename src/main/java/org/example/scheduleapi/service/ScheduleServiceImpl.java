@@ -1,10 +1,7 @@
 package org.example.scheduleapi.service;
 
 import lombok.RequiredArgsConstructor;
-import org.example.scheduleapi.dto.PasswordRequestDto;
-import org.example.scheduleapi.dto.ScheduleRequestDto;
-import org.example.scheduleapi.dto.ScheduleResponseDto;
-import org.example.scheduleapi.dto.ScheduleUpdateRequestDto;
+import org.example.scheduleapi.dto.*;
 import org.example.scheduleapi.entity.Schedule;
 import org.example.scheduleapi.repository.ScheduleRepository;
 import org.springframework.data.domain.Sort;
@@ -41,10 +38,15 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     @Override
     @Transactional(readOnly = true)
-    public ScheduleResponseDto findScheduleById(Long id) {
+    public ScheduleDetailResponseDto findScheduleById(Long id) {
         Schedule schedule = findScheduleOrThrow(id);
-        return new ScheduleResponseDto(schedule);
+        return getScheduleDetailResponseDto(schedule);
     }
+
+    private static ScheduleDetailResponseDto getScheduleDetailResponseDto(Schedule schedule) {
+        return new ScheduleDetailResponseDto(schedule);
+    }
+
 
     @Override
     public Schedule findScheduleOrThrow(Long id) {
