@@ -196,6 +196,7 @@ Database: MySQL
 ## 🔄 트러블 슈팅
 https://www.notion.so/API-Lv1-Lv6-24255d5f00a080b3b2ecf5fdab82c12a?source=copy_link
 
-
+## Swagger
+https://app.swaggerhub.com/apis-docs/bibliyaseoorganizati/schedule-api/1.0.0#/
 
 
